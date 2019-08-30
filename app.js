@@ -20,6 +20,8 @@ const loginRouter = require('./routes/login');
 const moviesRouter = require('./routes/movies');
 const serialsRouter = require('./routes/serials');
 const adminRouter = require('./routes/admin');
+const registerRouter = require('./routes/register');
+const accountRouter = require('./routes/account');
 
 const app = express();
 
@@ -48,6 +50,8 @@ app.use('/login', loginRouter);
 app.use('/movies', moviesRouter);
 app.use('/serials', serialsRouter);
 app.use('/admin', adminRouter);
+app.use('/register', registerRouter);
+app.use('/account', accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

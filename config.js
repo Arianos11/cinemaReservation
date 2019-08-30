@@ -1,5 +1,5 @@
 module.exports = {
-    keysSession: ['Your-key'],
+    keysSession: [''],
     maxAgeSession: 24 * 60 * 60 * 1000,
     dataBase: '',
 }
