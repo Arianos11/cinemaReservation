@@ -3,9 +3,23 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cookieSession = require('cookie-session');
+const config = require("./config");
+const mongoose = require('mongoose');
+
+mongoose.connect(config.dataBase, {useNewUrlParser: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Connected with mongo database!')
+});
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
+const moviesRouter = require('./routes/movies');
+const serialsRouter = require('./routes/serials');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 
@@ -18,9 +32,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieSession({
+  name: 'session',
+  keys: config.keysSession,
+  maxAge: config.maxAgeSession
+}))
+
+app.use((req, res, next) => {
+  res.locals.path = req.path;
+  next();
+});
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/login', loginRouter);
+app.use('/movies', moviesRouter);
+app.use('/serials', serialsRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
