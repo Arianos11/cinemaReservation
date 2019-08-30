@@ -3,9 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cookieSession = require('cookie-session');
-const config = require("./config");
+const flash = require('connect-flash');
+const session = require("express-session");
+const config = require("./config/keys");
 const mongoose = require('mongoose');
+const passport = require('passport');
+
+//Passport config
+require('./config/passport')(passport);
 
 mongoose.connect(config.dataBase, {useNewUrlParser: true});
 
@@ -16,11 +21,10 @@ db.once('open', function() {
 });
 
 const indexRouter = require('./routes/index');
-const loginRouter = require('./routes/login');
 const moviesRouter = require('./routes/movies');
 const serialsRouter = require('./routes/serials');
 const adminRouter = require('./routes/admin');
-const registerRouter = require('./routes/register');
+const userRouter = require('./routes/user');
 const accountRouter = require('./routes/account');
 
 const app = express();
@@ -34,11 +38,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieSession({
-  name: 'session',
-  keys: config.keysSession,
-  maxAge: config.maxAgeSession
+
+//Express session
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'SUPER_SECRET_CODE_45321',
+  resave: false,
+  saveUninitialized: true
 }))
+
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+//Connect flash
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+})
 
 app.use((req, res, next) => {
   res.locals.path = req.path;
@@ -46,11 +67,10 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
 app.use('/movies', moviesRouter);
 app.use('/serials', serialsRouter);
 app.use('/admin', adminRouter);
-app.use('/register', registerRouter);
+app.use('/user', userRouter);
 app.use('/account', accountRouter);
 
 // catch 404 and forward to error handler

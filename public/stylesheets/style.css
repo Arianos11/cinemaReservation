@@ -44,3 +44,22 @@ body {
 .active{
   color: #fff!important;
 }
+
+.pop {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  padding: 1rem;
+}
+
+.pop__success {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.pop__error {
+  background-color: #e74c3c;
+  color: #fff;
+}
