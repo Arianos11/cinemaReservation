@@ -15,5 +15,5 @@ html
         +item('Cinema', "/")
         +item('Movies', "/movies")
         +item('Serials on big screen', "/serials")
-        +item('Login', "/user/login")
+        +item( login ? 'Account' : 'Login', "/user/login")
     block content

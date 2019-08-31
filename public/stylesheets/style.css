@@ -47,12 +47,11 @@ body {
 }
 
 .pop {
-  position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 1.1rem;
   padding: 1rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .pop__success {
@@ -132,6 +131,8 @@ input:focus {
   background-color: #9b59b6;
   color: white;
   cursor: pointer;
+  box-shadow: 0 0.5rem 1.5rem rgba(0,0,0, 0.2);
+  outline: none;
 }
 
 .login--change {
@@ -140,4 +141,10 @@ input:focus {
 
 .login--change a {
   color: #9b59b6;
+}
+
+.error_msg_reg
+{
+  margin-top: 0.3rem;
+  color: red;
 }

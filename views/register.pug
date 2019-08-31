@@ -5,8 +5,8 @@ block content
             i(class="fas fa-user-plus")
             h1(class="title")= title
         - var n = 0
-        while n < errors.length || 0
-            p #{errors[n].msg}
+        while n < errors.length
+            p(class="error_msg_reg") #{errors[n].msg}
             - n++
         - if(success_msg != '')
                 div(class="pop pop__success") #{success_msg}

@@ -13,7 +13,7 @@ router.get('/register', (req, res, next) => {
 router.post('/register', async (req,res) => {
   errors = [];
   const { login, email, password, passwordConfirm } = req.body;
-  
+  const pattern = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
   if (!login || !email || !password || !passwordConfirm) {
     errors.push({ msg: 'Please enter all fields' });
@@ -25,6 +25,10 @@ router.post('/register', async (req,res) => {
 
   if (password.length < 8) {
     errors.push({ msg: 'Password must be at least 8 characters' });
+  }
+
+  if(!pattern.test(password)) {
+    errors.push({ msg: 'Password requires uppercase, numbers and special characters' });
   }
 
   if (errors.length > 0) {
