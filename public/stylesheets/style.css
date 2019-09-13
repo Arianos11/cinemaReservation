@@ -96,7 +96,8 @@ label {
 
 form p input {
   padding: 0.5rem 1.5rem;
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+  border: 1px solid #aeaeae; }
 
 input:focus {
   outline-color: #9b59b6; }
@@ -113,3 +114,27 @@ input:focus {
 .error_msg_reg {
   margin-top: 0.3rem;
   color: red; }
+
+.account {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+  padding: 3rem;
+  text-align: center;
+  border-radius: 2rem; }
+  .account--name {
+    font-size: 1.5rem;
+    margin-bottom: 1rem; }
+  .account--btn {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    color: white;
+    background-color: #9b59b6;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2);
+    padding: .7rem 2.5rem; }
